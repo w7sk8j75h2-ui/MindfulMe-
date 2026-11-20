@@ -1,0 +1,823 @@
+
+/* PAGE NAVIGATION */
+
+function showPage(pageName, button) {
+
+    document.querySelectorAll('.page').forEach(function(page) {
+        page.classList.remove('active');
+    });
+
+    document.getElementById(pageName).classList.add('active');
+
+    document.querySelectorAll('.nav-btn').forEach(function(btn) {
+        btn.classList.remove('active');
+    });
+
+    if (button) {
+        button.classList.add('active');
+    } else {
+        document.querySelectorAll('.nav-btn').forEach(function(btn) {
+            if (btn.getAttribute('onclick').includes("'" + pageName + "'")) {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    window.scrollTo(0, 0);
+}
+
+
+/* WELLNESS SECTIONS */
+
+const wellnessContent = {
+
+    stress: {
+        title: "Breathing Exercise",
+        description: "Take a short break and focus on slow, comfortable breathing.",
+        tips: [
+            "Manage your time →",
+            "Take breaks →",
+            "Stay active →",
+            "Talk to someone →"
+        ]
+    },
+
+    mindfulness: {
+        title: "Mindful Moment",
+        description: "Take a moment to notice your surroundings and focus on the present.",
+        tips: [
+            "Notice your surroundings →",
+            "Try a quiet moment →",
+            "Write your thoughts →",
+            "Take a screen break →"
+        ]
+    },
+
+    habits: {
+        title: "Healthy Daily Habits",
+        description: "Build small routines that help you feel ready for your day.",
+        tips: [
+            "Drink enough water →",
+            "Move around →",
+            "Eat regular meals →",
+            "Make time for hobbies →"
+        ]
+    },
+
+    sleep: {
+        title: "Rest and Recharge",
+        description: "Create a calm routine before bedtime and give yourself time to rest.",
+        tips: [
+            "Keep a bedtime routine →",
+            "Put screens away before bed →",
+            "Make your room comfortable →",
+            "Read something relaxing →"
+        ]
+    },
+
+    selfcare: {
+        title: "A Little Self-care",
+        description: "Make some time for an activity that you enjoy.",
+        tips: [
+            "Listen to music →",
+            "Spend time outdoors →",
+            "Talk to a friend →",
+            "Try something creative →"
+        ]
+    }
+
+};
+
+
+function showWellness(section, button) {
+
+    let data = wellnessContent[section];
+
+    document.getElementById("wellnessTitle").textContent = data.title;
+
+    document.getElementById("wellnessDescription").textContent =
+        data.description;
+
+    document.getElementById("wellnessTips").innerHTML = "";
+
+    data.tips.forEach(function(tip) {
+
+        let div = document.createElement("div");
+
+        div.className = "activity";
+        div.textContent = tip;
+
+        document.getElementById("wellnessTips").appendChild(div);
+
+    });
+
+    document.querySelectorAll(".tab-btn").forEach(function(btn) {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    document.getElementById("activityMessage").textContent = "";
+
+}
+
+
+function startActivity() {
+
+    document.getElementById("activityMessage").textContent =
+        "Take a few minutes for yourself. There's no rush!";
+
+}
+
+
+/* DAILY MOOD CHECK-IN */
+
+function chooseMood(mood) {
+
+    let messages = {
+
+        Happy: "That's lovely! Take a moment to enjoy what is going well today.",
+
+        Okay: "It's okay to have an ordinary day. Take things one step at a time.",
+
+        Tired: "Try taking a short break and getting some rest.",
+
+        Stressed: "Pause for a moment. Break your work into smaller steps and ask someone you trust for support if you need it.",
+
+        Excited: "That's great! Make time for something you enjoy."
+
+    };
+
+    document.getElementById("moodMessage").textContent = messages[mood];
+
+}
+
+
+/* STUDY PLANNER AND DEADLINES */
+
+let tasks = JSON.parse(localStorage.getItem("mindfulTasks")) || [];
+
+
+function saveTasks() {
+
+    localStorage.setItem("mindfulTasks", JSON.stringify(tasks));
+
+}
+
+
+function addTask() {
+
+    let name = document.getElementById("taskName").value.trim();
+
+    let subject = document.getElementById("taskSubject").value;
+
+    let deadline = document.getElementById("taskDeadline").value;
+
+
+    if (!name || !deadline) {
+
+        alert("Please enter a task name and deadline.");
+
+        return;
+
+    }
+
+
+    tasks.push({
+
+        name: name,
+
+        subject: subject,
+
+        deadline: deadline,
+
+        completed: false
+
+    });
+
+
+    saveTasks();
+
+    document.getElementById("taskName").value = "";
+
+    document.getElementById("taskDeadline").value = "";
+
+
+    displayTasks();
+
+    renderCalendar();
+
+}
+
+
+function displayTasks() {
+
+    let list = document.getElementById("taskList");
+
+    list.innerHTML = "";
+
+
+    let sortedTasks = [...tasks].sort(function(a, b) {
+
+        return a.deadline.localeCompare(b.deadline);
+
+    });
+
+
+    if (sortedTasks.length === 0) {
+
+        list.textContent =
+            "No tasks added yet. Add your first task above!";
+
+        return;
+
+    }
+
+
+    sortedTasks.forEach(function(task) {
+
+        let originalIndex = tasks.indexOf(task);
+
+
+        let div = document.createElement("div");
+
+        div.className = "task-item" +
+            (task.completed ? " completed" : "");
+
+
+        let info = document.createElement("div");
+
+        info.className = "task-info";
+
+
+        let title = document.createElement("strong");
+
+        title.textContent = task.name;
+
+
+        let subject = document.createElement("small");
+
+        subject.textContent = task.subject;
+
+
+        let deadline = document.createElement("span");
+
+        deadline.className = "deadline";
+
+        deadline.textContent = "Due: " + formatDate(task.deadline);
+
+
+        info.appendChild(title);
+
+        info.appendChild(subject);
+
+        info.appendChild(deadline);
+
+
+        let actions = document.createElement("div");
+
+        actions.className = "task-actions";
+
+
+        let check = document.createElement("input");
+
+        check.type = "checkbox";
+
+        check.checked = task.completed;
+
+        check.title = "Mark as completed";
+
+
+        check.onchange = function() {
+
+            tasks[originalIndex].completed = check.checked;
+
+            saveTasks();
+
+            displayTasks();
+
+        };
+
+
+        let deleteBtn = document.createElement("button");
+
+        deleteBtn.textContent = "Delete";
+
+
+        deleteBtn.onclick = function() {
+
+            tasks.splice(originalIndex, 1);
+
+            saveTasks();
+
+            displayTasks();
+
+            renderCalendar();
+
+        };
+
+
+        actions.appendChild(check);
+
+        actions.appendChild(deleteBtn);
+
+
+        div.appendChild(info);
+
+        div.appendChild(actions);
+
+
+        list.appendChild(div);
+
+    });
+
+}
+
+
+/* FORMAT DEADLINE DATE */
+
+function formatDate(dateString) {
+
+    let date = new Date(dateString + "T00:00:00");
+
+    return date.toLocaleDateString("en-IN", {
+
+        day: "numeric",
+
+        month: "short",
+
+        year: "numeric"
+
+    });
+
+}
+
+
+/* CALENDAR */
+
+let calendarDate = new Date();
+
+let selectedDate = "";
+
+
+function renderCalendar() {
+
+    let year = calendarDate.getFullYear();
+
+    let month = calendarDate.getMonth();
+
+
+    let firstDay = new Date(year, month, 1).getDay();
+
+    let totalDays = new Date(year, month + 1, 0).getDate();
+
+
+    document.getElementById("calendarMonth").textContent =
+
+        calendarDate.toLocaleDateString("en-IN", {
+
+            month: "long",
+
+            year: "numeric"
+
+        });
+
+
+    let grid = document.getElementById("calendarGrid");
+
+    grid.innerHTML = "";
+
+
+    ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].forEach(function(day) {
+
+        let div = document.createElement("div");
+
+        div.className = "day-name";
+
+        div.textContent = day;
+
+        grid.appendChild(div);
+
+    });
+
+
+    for (let i = 0; i < firstDay; i++) {
+
+        let empty = document.createElement("div");
+
+        empty.className = "calendar-day empty";
+
+        grid.appendChild(empty);
+
+    }
+
+
+    let today = new Date();
+
+    let todayString = [
+
+        today.getFullYear(),
+
+        String(today.getMonth() + 1).padStart(2, "0"),
+
+        String(today.getDate()).padStart(2, "0")
+
+    ].join("-");
+
+
+    for (let day = 1; day <= totalDays; day++) {
+
+        let dateString = [
+
+            year,
+
+            String(month + 1).padStart(2, "0"),
+
+            String(day).padStart(2, "0")
+
+        ].join("-");
+
+
+        let div = document.createElement("div");
+
+        div.className = "calendar-day";
+
+        div.textContent = day;
+
+
+        if (dateString === todayString) {
+
+            div.classList.add("today");
+
+        }
+
+
+        if (dateString === selectedDate) {
+
+            div.classList.add("selected");
+
+        }
+
+
+        let hasTask = tasks.some(function(task) {
+
+            return task.deadline === dateString;
+
+        });
+
+
+        if (hasTask) {
+
+            div.style.borderBottom = "3px solid #9ba98d";
+
+        }
+
+
+        div.onclick = function() {
+
+            selectedDate = dateString;
+
+            showTasksForDate(dateString);
+
+            renderCalendar();
+
+        };
+
+
+        grid.appendChild(div);
+
+    }
+
+}
+
+
+function changeMonth(amount) {
+
+    calendarDate.setMonth(calendarDate.getMonth() + amount);
+
+    renderCalendar();
+
+}
+
+
+function showTasksForDate(dateString) {
+
+    let matchingTasks = tasks.filter(function(task) {
+
+        return task.deadline === dateString;
+
+    });
+
+
+    let message = "Selected date: " + formatDate(dateString);
+
+
+    if (matchingTasks.length > 0) {
+
+        message += " — " + matchingTasks.length + " task(s) due.";
+
+    } else {
+
+        message += " — No tasks due.";
+
+    }
+
+
+    document.getElementById("selectedDateText").textContent = message;
+
+}
+
+
+/* NOTES SECTION */
+
+let notes = JSON.parse(localStorage.getItem("mindfulNotes")) || [];
+
+let currentSubject = "All";
+
+
+function openNoteForm() {
+
+    document.getElementById("noteForm").style.display = "block";
+
+}
+
+
+function closeNoteForm() {
+
+    document.getElementById("noteForm").style.display = "none";
+
+}
+
+
+function addNote() {
+
+    let title = document.getElementById("noteTitle").value.trim();
+
+    let subject = document.getElementById("noteSubject").value;
+
+    let text = document.getElementById("noteText").value.trim();
+
+
+    if (!title || !text) {
+
+        alert("Please enter a title and your note.");
+
+        return;
+
+    }
+
+
+    notes.push({
+
+        title: title,
+
+        subject: subject,
+
+        text: text,
+
+        date: new Date().toLocaleDateString("en-IN")
+
+    });
+
+
+    localStorage.setItem("mindfulNotes", JSON.stringify(notes));
+
+
+    document.getElementById("noteTitle").value = "";
+
+    document.getElementById("noteText").value = "";
+
+
+    closeNoteForm();
+
+    displayNotes();
+
+}
+
+
+function filterNotes(subject, button) {
+
+    currentSubject = subject;
+
+
+    document.querySelectorAll(".subject-btn").forEach(function(btn) {
+
+        btn.classList.remove("active");
+
+    });
+
+
+    button.classList.add("active");
+
+    displayNotes();
+
+}
+
+
+function displayNotes() {
+
+    let list = document.getElementById("noteList");
+
+    let search = document.getElementById("noteSearch").value.toLowerCase();
+
+
+    list.innerHTML = "";
+
+
+    let filtered = notes.filter(function(note) {
+
+        let subjectMatches =
+            currentSubject === "All" || note.subject === currentSubject;
+
+
+        let searchMatches =
+            note.title.toLowerCase().includes(search) ||
+            note.text.toLowerCase().includes(search);
+
+
+        return subjectMatches && searchMatches;
+
+    });
+
+
+    if (filtered.length === 0) {
+
+        list.textContent =
+            "No notes found. Add a new note to get started!";
+
+        return;
+
+    }
+
+
+    filtered.forEach(function(note) {
+
+        let index = notes.indexOf(note);
+
+
+        let div = document.createElement("div");
+
+        div.className = "note-card";
+
+
+        let info = document.createElement("div");
+
+
+        let title = document.createElement("h3");
+
+        title.textContent = note.title;
+
+
+        let subject = document.createElement("small");
+
+        subject.textContent = note.subject + " • " + note.date;
+
+
+        let text = document.createElement("p");
+
+        text.textContent = note.text;
+
+        text.style.marginTop = "10px";
+
+
+        info.appendChild(title);
+
+        info.appendChild(subject);
+
+        info.appendChild(text);
+
+
+        let deleteBtn = document.createElement("button");
+
+        deleteBtn.textContent = "Delete";
+
+
+        deleteBtn.onclick = function() {
+
+            notes.splice(index, 1);
+
+            localStorage.setItem("mindfulNotes", JSON.stringify(notes));
+
+            displayNotes();
+
+        };
+
+
+        div.appendChild(info);
+
+        div.appendChild(deleteBtn);
+
+
+        list.appendChild(div);
+
+    });
+
+}
+
+
+/* PROFILE SECTION */
+
+function saveProfile() {
+
+    let name = document.getElementById("nameInput").value.trim();
+
+    let email = document.getElementById("emailInput").value.trim();
+
+
+    if (!name || !email) {
+
+        alert("Please fill in both fields.");
+
+        return;
+
+    }
+
+
+    localStorage.setItem("mindfulName", name);
+
+    localStorage.setItem("mindfulEmail", email);
+
+
+    displayProfile();
+
+    alert("Profile updated!");
+
+}
+
+
+function displayProfile() {
+
+    let name = localStorage.getItem("mindfulName") || "Student";
+
+    let email = localStorage.getItem("mindfulEmail") ||
+        "Add your email address";
+
+
+    document.getElementById("profileName").textContent = name;
+
+    document.getElementById("profileEmail").textContent = email;
+
+
+    document.getElementById("nameInput").value =
+        name === "Student" ? "" : name;
+
+
+    document.getElementById("emailInput").value =
+        email === "Add your email address" ? "" : email;
+
+
+    document.getElementById("topAvatar").textContent =
+        name === "Student" ? "S" : name.charAt(0).toUpperCase();
+
+}
+
+
+/* SEARCH BAR */
+
+document.getElementById("siteSearch").addEventListener("keydown", function(event) {
+
+    if (event.key === "Enter") {
+
+        let search = this.value.toLowerCase();
+
+
+        if (search.includes("well")) {
+
+            showPage("wellness");
+
+        } else if (search.includes("plan") || search.includes("task")) {
+
+            showPage("planner");
+
+        } else if (search.includes("note")) {
+
+            showPage("notes");
+
+        } else if (search.includes("resource")) {
+
+            showPage("resources");
+
+        } else if (search.includes("profile")) {
+
+            showPage("profile");
+
+        } else {
+
+            showPage("home");
+
+        }
+
+    }
+
+});
+
+
+/* LOAD SAVED INFORMATION */
+
+displayTasks();
+
+renderCalendar();
+
+displayNotes();
+
+displayProfile();
