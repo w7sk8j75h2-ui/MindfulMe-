@@ -1,0 +1,647 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MindfulMe</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- LEFT SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="logo">Mindful<span>Me.</span></div>
+
+    <nav>
+        <button class="nav-btn active" onclick="showPage('home', this)">
+            <span class="nav-icon">⌂</span> Home
+        </button>
+
+        <button class="nav-btn" onclick="showPage('wellness', this)">
+            <span class="nav-icon">♧</span> Wellness
+        </button>
+
+        <button class="nav-btn" onclick="showPage('planner', this)">
+            <span class="nav-icon">▦</span> Planner
+        </button>
+
+        <button class="nav-btn" onclick="showPage('notes', this)">
+            <span class="nav-icon">▤</span> Notes
+        </button>
+
+        <button class="nav-btn" onclick="showPage('resources', this)">
+            <span class="nav-icon">▦</span> Resources
+        </button>
+
+        <button class="nav-btn" onclick="showPage('profile', this)">
+            <span class="nav-icon">⚙</span> Profile
+        </button>
+    </nav>
+
+</aside>
+
+
+<!-- MAIN WEBSITE -->
+
+<div class="main-area">
+
+    <div class="topbar">
+        <input class="search-box" id="siteSearch" type="text" placeholder="⌕ Search...">
+        <span class="top-icon" title="Notifications">♧</span>
+        <div class="avatar" id="topAvatar">S</div>
+    </div>
+
+
+    <main class="content">
+
+        <!-- HOME PAGE -->
+
+        <section id="home" class="page active">
+
+            <div class="welcome">
+
+                <div class="welcome-text">
+                    <div class="small-heading">A space made for you</div>
+
+                    <h1>Welcome!</h1>
+
+                    <p>
+                        Find tools and resources to support your well-being
+                        and stay organised, all in one place.
+                    </p>
+
+                    <button class="btn" onclick="showPage('wellness')">
+                        Explore wellness →
+                    </button>
+                </div>
+
+                <img class="welcome-image"
+                    src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=80"
+                    alt="Peaceful green forest">
+
+            </div>
+
+
+            <div class="grid">
+
+                <div class="card">
+                    <div class="icon">🌿</div>
+                    <h3>Wellness</h3>
+                    <p>Take a break and look after yourself.</p>
+                    <button class="btn light-btn" onclick="showPage('wellness')">
+                        Explore →
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="icon">📅</div>
+                    <h3>Study Planner</h3>
+                    <p>Organise your tasks and deadlines.</p>
+                    <button class="btn light-btn" onclick="showPage('planner')">
+                        Explore →
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="icon">📝</div>
+                    <h3>Notes</h3>
+                    <p>Keep all your school notes together.</p>
+                    <button class="btn light-btn" onclick="showPage('notes')">
+                        Explore →
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="icon">✧</div>
+                    <h3>Resources</h3>
+                    <p>Find useful tips and helpful activities.</p>
+                    <button class="btn light-btn" onclick="showPage('resources')">
+                        Explore →
+                    </button>
+                </div>
+
+            </div>
+
+
+            <div class="photo-strip">
+
+                <img
+                    src="https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=900&q=80"
+                    alt="Green indoor plants">
+
+                <div class="photo-caption">
+                    <div class="small-heading">A little reminder</div>
+                    <h2>Slow down. Breathe. Begin again.</h2>
+                    <p>You deserve time for yourself, too.</p>
+                </div>
+
+            </div>
+
+
+            <div class="reminder">
+                <div class="small-heading">Today's thought</div>
+                <p>You don't have to do everything today. Just start somewhere.</p>
+            </div>
+
+        </section>
+
+
+        <!-- WELLNESS PAGE -->
+
+        <section id="wellness" class="page">
+
+            <div class="small-heading">Take care of yourself</div>
+
+            <h1>Wellness</h1>
+
+            <p>
+                Small activities can make a difference to your day.
+            </p>
+
+            <img class="wellness-image"
+                src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80"
+                alt="Plants in natural light">
+
+
+            <div class="tabs">
+
+                <button class="tab-btn active"
+                    onclick="showWellness('stress', this)">
+                    Stress Management
+                </button>
+
+                <button class="tab-btn"
+                    onclick="showWellness('mindfulness', this)">
+                    Mindfulness
+                </button>
+
+                <button class="tab-btn"
+                    onclick="showWellness('habits', this)">
+                    Healthy Habits
+                </button>
+
+                <button class="tab-btn"
+                    onclick="showWellness('sleep', this)">
+                    Sleep
+                </button>
+
+                <button class="tab-btn"
+                    onclick="showWellness('selfcare', this)">
+                    Self-care
+                </button>
+
+            </div>
+
+
+            <div class="wellness-layout">
+
+                <div class="wellness-panel">
+
+                    <div class="small-heading">Try this activity</div>
+
+                    <h3 id="wellnessTitle">Breathing Exercise</h3>
+
+                    <p id="wellnessDescription">
+                        Take a short break and focus on slow, comfortable breathing.
+                    </p>
+
+                    <button class="btn" onclick="startActivity()">
+                        Start activity
+                    </button>
+
+                    <p id="activityMessage" class="activity-message"></p>
+
+                </div>
+
+
+                <div class="wellness-panel">
+
+                    <div class="small-heading">Helpful ideas</div>
+
+                    <h3>Small steps</h3>
+
+                    <div id="wellnessTips">
+                        <div class="activity">Manage your time →</div>
+                        <div class="activity">Take breaks →</div>
+                        <div class="activity">Stay active →</div>
+                        <div class="activity">Talk to someone →</div>
+                    </div>
+
+                </div>
+
+
+                <div class="wellness-panel">
+
+                    <div class="small-heading">Quick activities</div>
+
+                    <h3>Try something simple</h3>
+
+                    <div class="activity">5 min breathing</div>
+                    <div class="activity">Grounding exercise</div>
+                    <div class="activity">Gratitude journaling</div>
+                    <div class="activity">Stretch break</div>
+
+                </div>
+
+            </div>
+
+
+            <h2 class="section-title">Daily check-in</h2>
+
+            <p>How are you feeling today?</p>
+
+            <div class="mood-buttons">
+
+                <button onclick="chooseMood('Happy')">😊 Happy</button>
+                <button onclick="chooseMood('Okay')">🙂 Okay</button>
+                <button onclick="chooseMood('Tired')">😴 Tired</button>
+                <button onclick="chooseMood('Stressed')">😟 Stressed</button>
+                <button onclick="chooseMood('Excited')">🤩 Excited</button>
+
+            </div>
+
+            <div class="card" id="moodMessage">
+                Choose an option for a small suggestion.
+            </div>
+
+        </section>
+
+
+        <!-- STUDY PLANNER PAGE -->
+
+        <section id="planner" class="page">
+
+            <div class="small-heading">Plan your schoolwork</div>
+
+            <h1>Study Planner</h1>
+
+            <p>
+                Keep track of your tasks, subjects and deadlines.
+            </p>
+
+
+            <div class="planner-tabs">
+
+                <button onclick="document.getElementById('calendarCard').scrollIntoView({behavior:'smooth'})">
+                    Calendar
+                </button>
+
+                <button onclick="document.getElementById('taskForm').scrollIntoView({behavior:'smooth'})">
+                    To-do list
+                </button>
+
+                <button onclick="document.getElementById('taskForm').scrollIntoView({behavior:'smooth'})">
+                    Add a task
+                </button>
+
+            </div>
+
+
+            <div class="planner-layout">
+
+                <!-- CALENDAR -->
+
+                <div class="calendar-card" id="calendarCard">
+
+                    <div class="calendar-heading">
+
+                        <button onclick="changeMonth(-1)">‹</button>
+
+                        <h3 id="calendarMonth">Month</h3>
+
+                        <button onclick="changeMonth(1)">›</button>
+
+                    </div>
+
+                    <div class="calendar-grid" id="calendarGrid"></div>
+
+                    <p class="calendar-help">
+                        Select a date to see tasks due on that day.
+                    </p>
+
+                    <p id="selectedDateText"></p>
+
+                </div>
+
+
+                <!-- TASK LIST -->
+
+                <div class="tasks-card">
+
+                    <h3>My tasks</h3>
+
+                    <p>Keep your upcoming work in one place.</p>
+
+
+                    <div class="task-form" id="taskForm">
+
+                        <label for="taskName">Task name</label>
+
+                        <input
+                            class="input-box"
+                            id="taskName"
+                            type="text"
+                            placeholder="e.g. Science revision">
+
+
+                        <label for="taskSubject">Subject</label>
+
+                        <select class="input-box" id="taskSubject">
+
+                            <option value="Maths">Maths</option>
+                            <option value="Science">Science</option>
+                            <option value="English">English</option>
+                            <option value="Humanities">Humanities</option>
+                            <option value="Languages">Languages</option>
+                            <option value="Other">Other</option>
+
+                        </select>
+
+
+                        <label for="taskDeadline">Deadline date</label>
+
+                        <input
+                            class="input-box"
+                            id="taskDeadline"
+                            type="date">
+
+
+                        <button class="btn" onclick="addTask()">
+                            + Add task
+                        </button>
+
+                    </div>
+
+
+                    <div class="small-heading task-heading">
+                        Your to-do list
+                    </div>
+
+                    <div id="taskList"></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NOTES PAGE -->
+
+        <section id="notes" class="page">
+
+            <div class="small-heading">Keep everything together</div>
+
+            <h1>Notes</h1>
+
+            <p>Save your school notes and ideas in one place.</p>
+
+
+            <div class="notes-layout">
+
+
+                <div class="subject-list">
+
+                    <h3>Subjects</h3>
+
+                    <button class="subject-btn active"
+                        onclick="filterNotes('All', this)">
+                        ○ All Notes
+                    </button>
+
+                    <button class="subject-btn"
+                        onclick="filterNotes('Maths', this)">
+                        ○ Maths
+                    </button>
+
+                    <button class="subject-btn"
+                        onclick="filterNotes('Science', this)">
+                        ○ Science
+                    </button>
+
+                    <button class="subject-btn"
+                        onclick="filterNotes('English', this)">
+                        ○ English
+                    </button>
+
+                    <button class="subject-btn"
+                        onclick="filterNotes('Humanities', this)">
+                        ○ Humanities
+                    </button>
+
+                    <button class="subject-btn"
+                        onclick="filterNotes('Languages', this)">
+                        ○ Languages
+                    </button>
+
+                </div>
+
+
+                <div class="notes-content">
+
+                    <div class="notes-toolbar">
+
+                        <input
+                            class="input-box"
+                            id="noteSearch"
+                            type="text"
+                            placeholder="⌕ Search notes..."
+                            oninput="displayNotes()">
+
+                        <button class="btn" onclick="openNoteForm()">
+                            + New Note
+                        </button>
+
+                    </div>
+
+
+                    <div class="card note-form" id="noteForm">
+
+                        <h3>Create a note</h3>
+
+                        <label for="noteTitle">Title</label>
+
+                        <input
+                            class="input-box"
+                            id="noteTitle"
+                            type="text"
+                            placeholder="Note title">
+
+
+                        <label for="noteSubject">Subject</label>
+
+                        <select class="input-box" id="noteSubject">
+
+                            <option>Maths</option>
+                            <option>Science</option>
+                            <option>English</option>
+                            <option>Humanities</option>
+                            <option>Languages</option>
+
+                        </select>
+
+
+                        <label for="noteText">Your note</label>
+
+                        <textarea
+                            class="input-box"
+                            id="noteText"
+                            rows="4"
+                            placeholder="Write your notes here..."></textarea>
+
+
+                        <button class="btn" onclick="addNote()">
+                            Save note
+                        </button>
+
+                        <button class="btn light-btn" onclick="closeNoteForm()">
+                            Cancel
+                        </button>
+
+                    </div>
+
+
+                    <div id="noteList"></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RESOURCES PAGE -->
+
+        <section id="resources" class="page">
+
+            <div class="small-heading">Helpful ideas and tips</div>
+
+            <h1>Resources</h1>
+
+            <p>
+                Explore simple ways to manage school and personal life.
+            </p>
+
+
+            <div class="grid resource-grid">
+
+                <div class="card resource-card">
+                    <div class="icon">📅</div>
+                    <h3>Time Management</h3>
+                    <p>Plan your week and divide bigger tasks into smaller steps.</p>
+                </div>
+
+                <div class="card resource-card">
+                    <div class="icon">🌿</div>
+                    <h3>Stress Management</h3>
+                    <p>Take breaks, organise your work and speak to someone you trust when you need support.</p>
+                </div>
+
+                <div class="card resource-card">
+                    <div class="icon">📚</div>
+                    <h3>Study Tips</h3>
+                    <p>Find a quiet place, remove distractions and set small study goals.</p>
+                </div>
+
+                <div class="card resource-card">
+                    <div class="icon">🌙</div>
+                    <h3>Healthy Routines</h3>
+                    <p>Make time for sleep, hobbies, schoolwork and relaxation.</p>
+                </div>
+
+                <div class="card resource-card">
+                    <div class="icon">📝</div>
+                    <h3>Organisation</h3>
+                    <p>Use lists and reminders to keep track of important things.</p>
+                </div>
+
+                <div class="card resource-card">
+                    <div class="icon">🎨</div>
+                    <h3>Creative Breaks</h3>
+                    <p>Try drawing, reading, music or another hobby you enjoy.</p>
+                </div>
+
+            </div>
+
+
+            <div class="reminder">
+                <div class="small-heading">Remember</div>
+                <p>Being organised is about making life easier, not making it perfect.</p>
+            </div>
+
+        </section>
+
+
+        <!-- PROFILE PAGE -->
+
+        <section id="profile" class="page">
+
+            <div class="small-heading">Your personal space</div>
+
+            <h1>My Profile</h1>
+
+            <p>Manage your personal details here.</p>
+
+
+            <div class="card profile-card">
+
+                <div class="profile-avatar">👤</div>
+
+                <h2 id="profileName">Student</h2>
+
+                <p id="profileEmail">Add your email address</p>
+
+
+                <h3 class="edit-heading">Edit profile</h3>
+
+
+                <label for="nameInput">Your name</label>
+
+                <input
+                    class="input-box"
+                    id="nameInput"
+                    type="text"
+                    placeholder="Enter your name">
+
+
+                <label for="emailInput">Email address</label>
+
+                <input
+                    class="input-box"
+                    id="emailInput"
+                    type="email"
+                    placeholder="Enter your email">
+
+
+                <button class="btn" onclick="saveProfile()">
+                    Save changes
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        MindfulMe. | A little space for a better balance.
+    </footer>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
